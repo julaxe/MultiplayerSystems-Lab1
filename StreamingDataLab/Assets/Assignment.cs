@@ -81,8 +81,16 @@ static public class AssignmentPart1
         foreach (PartyCharacter pc in GameContent.partyCharacters)
         {
             Debug.Log("PC class id == " + pc.classID + "," + pc.health + "," + pc.mana + "," + pc.strength + "," + pc.agility + "," + pc.wisdom);
+
             sw.WriteLine(pc.classID + "," + pc.health + "," + pc.mana + "," + pc.strength + "," + pc.agility + "," + pc.wisdom);
+
+            foreach(int e in pc.equipment)
+            {
+                sw.WriteLine(e);
+            }
+            sw.WriteLine("");
         }
+        
 
         sw.Close();
     }
@@ -97,6 +105,13 @@ static public class AssignmentPart1
         {
             string[] character = line.Split(',');
             PartyCharacter newCharacter = new PartyCharacter(int.Parse(character[0]), int.Parse(character[1]), int.Parse(character[2]), int.Parse(character[3]), int.Parse(character[4]), int.Parse(character[5]));
+            
+            //go through the equipment until there is an empty line -> then skip it.
+            while ((line = sr.ReadLine()) != "")
+            {
+                newCharacter.equipment.AddLast(int.Parse(line));
+            }
+
             GameContent.partyCharacters.AddLast(newCharacter);
         }
 
